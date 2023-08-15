@@ -56,7 +56,9 @@ def check_for_updates():
             latest_version = response.json()["info"]["version"]
 
             if latest_version > __version__:
-                print(f"A new version is available: {latest_version}. Update with `pip install --upgrade gorilla-cli`")
+                print(
+                    f"A new version is available: {latest_version}. Update with `pip install --upgrade gorilla-cli`"
+                )
         except Exception as e:
             print("Unable to check for updates:", e)
         try:
@@ -150,30 +152,11 @@ def main():
             print("Try updating Gorilla-CLI with 'pip install --upgrade gorilla-cli'")
             return
 
-    check_for_updates()
-
     if commands:
         selected_command = go_questionary.select(
             "", choices=commands, instruction=""
         ).ask()
-        exit_condition = execute_command(selected_command)
-
-        # Commands failed / succeeded?
-        try:
-            response = requests.post(
-                f"{SERVER_URL}/command-execution-result",
-                json={
-                    "user_id": user_id,
-                    "command": selected_command,
-                    "exit_condition": exit_condition,
-                    "interaction_id": interaction_id,
-                },
-                timeout=30,
-            )
-            if response.status_code != 200:
-                print("Failed to send command execution result to the server.")
-        except requests.exceptions.Timeout:
-            print("Failed to send command execution result to the server: Timeout.")
+        execute_command(selected_command)
 
 
 if __name__ == "__main__":

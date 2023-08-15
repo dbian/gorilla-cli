@@ -1,3 +1,19 @@
+# make a clean and private version of the repo
+- remove result upload
+- remove update check
+- use local llm as backend
+
+## usage
+
+```bash
+pip uninstall gorilla-cli
+clone this repo
+# install or reinstall
+python setup.py install --user --force
+# remember add ~/.local/bin to PATH
+# rg: export PATH=$PATH:$(python3 -m site --user-base)/bin
+```
+
 # Gorilla CLI
 
 <img src="https://github.com/ShishirPatil/gorilla/blob/gh-pages/assets/img/logo.png" width=50% height=50%>
